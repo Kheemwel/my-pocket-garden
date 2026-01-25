@@ -10,29 +10,92 @@ function randomInt(min: number, max: number): number {
 }
 
 export const shopSystem = {
-  // Restock the shop with random seeds
+  // Restock the shop - stacks new stock with existing stock
   restockShop(): ShopStock[] {
-    const stock: ShopStock[] = [];
+    const currentStock = [...gameStore.state.shopStock];
     
-    // Filter seeds that pass the chance check
-    const availableSeeds = SEEDS.filter(seed => Math.random() < seed.shopChance);
-    
-    // Limit to max seed types
-    const selectedSeeds = availableSeeds.slice(0, SHOP_CONFIG.maxSeedTypes);
-    
-    // Generate stock for each seed
-    selectedSeeds.forEach(seed => {
-      stock.push({
-        seedId: seed.id,
-        quantity: randomInt(seed.shopStockMin, seed.shopStockMax),
-        price: seed.buyPrice,
-      });
+    // Create a map of existing stock for easy lookup
+    const stockMap = new Map<string, ShopStock>();
+    currentStock.forEach(item => {
+      stockMap.set(item.seedId, { ...item });
     });
+    
+    // For each seed, check if it passes the chance check and add stock
+    SEEDS.forEach(seed => {
+      if (Math.random() < seed.shopChance) {
+        const addedQuantity = randomInt(seed.shopStockMin, seed.shopStockMax);
+        
+        if (stockMap.has(seed.id)) {
+          // Stack with existing stock
+          const existing = stockMap.get(seed.id)!;
+          existing.quantity += addedQuantity;
+        } else {
+          // Add new stock entry
+          stockMap.set(seed.id, {
+            seedId: seed.id,
+            quantity: addedQuantity,
+            price: seed.buyPrice,
+          });
+        }
+      }
+    });
+    
+    // Convert map back to array
+    const stock = Array.from(stockMap.values());
     
     // Update the store
     gameStore.setShopStock(stock);
     
     return stock;
+  },
+  
+  // Initialize shop with all seeds (0 quantity for those not in stock)
+  initializeShop(): ShopStock[] {
+    const currentStock = gameStore.state.shopStock;
+    const stockMap = new Map<string, ShopStock>();
+    
+    // First, add existing stock
+    currentStock.forEach(item => {
+      stockMap.set(item.seedId, { ...item });
+    });
+    
+    // Ensure all seeds are represented (with 0 quantity if not in stock)
+    SEEDS.forEach(seed => {
+      if (!stockMap.has(seed.id)) {
+        stockMap.set(seed.id, {
+          seedId: seed.id,
+          quantity: 0,
+          price: seed.buyPrice,
+        });
+      }
+    });
+    
+    const stock = Array.from(stockMap.values());
+    gameStore.setShopStock(stock);
+    return stock;
+  },
+  
+  // Get all seeds with their stock status (for display)
+  getAllSeedsWithStock(): ShopStock[] {
+    const stockMap = new Map<string, ShopStock>();
+    
+    // Add current stock
+    gameStore.state.shopStock.forEach(item => {
+      stockMap.set(item.seedId, { ...item });
+    });
+    
+    // Ensure all seeds are represented
+    SEEDS.forEach(seed => {
+      if (!stockMap.has(seed.id)) {
+        stockMap.set(seed.id, {
+          seedId: seed.id,
+          quantity: 0,
+          price: seed.buyPrice,
+        });
+      }
+    });
+    
+    return Array.from(stockMap.values());
   },
   
   // Buy seeds from shop

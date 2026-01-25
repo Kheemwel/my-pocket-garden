@@ -1,5 +1,5 @@
-// Recipe card component
-import { Component, For, createMemo } from 'solid-js';
+// Recipe card component - compact grid version
+import { Component, For, Show, createMemo } from 'solid-js';
 import { gameStore } from '../../core/GameStore';
 import { cookingSystem } from '../../systems/CookingSystem';
 import { getItem } from '../../data/items';
@@ -7,12 +7,11 @@ import type { Recipe } from '../../data/recipes';
 
 interface RecipeCardProps {
   recipe: Recipe;
-  onCook: () => void;
+  onCook: (times: number) => void;
 }
 
 export const RecipeCard: Component<RecipeCardProps> = (props) => {
   const ingredientStatus = createMemo(() => {
-    // Subscribe to inventory changes
     const _ = gameStore.state.inventory;
     return cookingSystem.getIngredientStatus(props.recipe.id);
   });
@@ -22,55 +21,63 @@ export const RecipeCard: Component<RecipeCardProps> = (props) => {
     return cookingSystem.canCook(props.recipe.id);
   });
   
+  const maxCookCount = createMemo(() => {
+    const _ = gameStore.state.inventory;
+    return cookingSystem.getMaxCookCount(props.recipe.id);
+  });
+  
   const outputItem = createMemo(() => getItem(props.recipe.output.itemId));
   
   return (
-    <div class={`recipe-card ${canCook() ? 'can-cook' : 'cannot-cook'}`}>
+    <div class={`recipe-card compact ${canCook() ? 'can-cook' : 'cannot-cook'}`}>
       <div class="recipe-header">
         <span class="recipe-emoji">{props.recipe.emoji}</span>
         <div class="recipe-info">
           <span class="recipe-name">{props.recipe.name}</span>
-          <span class="recipe-description">{props.recipe.description}</span>
-        </div>
-      </div>
-      
-      <div class="recipe-ingredients">
-        <span class="ingredients-label">Ingredients:</span>
-        <div class="ingredients-list">
-          <For each={ingredientStatus()}>
-            {(ing) => (
-              <div class={`ingredient ${ing.hasEnough ? 'has-enough' : 'missing'}`}>
-                <span class="ing-emoji">{ing.emoji}</span>
-                <span class="ing-name">{ing.name}</span>
-                <span class="ing-count">
-                  {ing.available}/{ing.required}
-                </span>
-              </div>
-            )}
-          </For>
-        </div>
-      </div>
-      
-      <div class="recipe-output">
-        <span class="output-label">Creates:</span>
-        <div class="output-item">
-          <span class="output-emoji">{outputItem()?.emoji}</span>
-          <span class="output-name">
-            {props.recipe.output.quantity}x {outputItem()?.name}
-          </span>
-          <span class="output-value">
-            ({outputItem()?.sellPrice} G$ each)
+          <span class="recipe-output-preview">
+            {outputItem()?.emoji} {outputItem()?.sellPrice} G$
           </span>
         </div>
+        <Show when={maxCookCount() > 0}>
+          <span class="recipe-max">x{maxCookCount()}</span>
+        </Show>
       </div>
       
-      <button
-        class="cook-btn"
-        onClick={props.onCook}
-        disabled={!canCook()}
-      >
-        {canCook() ? 'Cook' : 'Missing Ingredients'}
-      </button>
+      <div class="recipe-ingredients compact">
+        <For each={ingredientStatus()}>
+          {(ing) => (
+            <span class={`ing-compact ${ing.hasEnough ? 'has-enough' : 'missing'}`}>
+              {ing.emoji}{ing.available}/{ing.required}
+            </span>
+          )}
+        </For>
+      </div>
+      
+      <div class="recipe-actions">
+        <button
+          class="cook-btn"
+          onClick={() => props.onCook(1)}
+          disabled={!canCook()}
+        >
+          1x
+        </button>
+        <Show when={maxCookCount() >= 5}>
+          <button
+            class="cook-btn"
+            onClick={() => props.onCook(5)}
+            disabled={maxCookCount() < 5}
+          >
+            5x
+          </button>
+        </Show>
+        <button
+          class="cook-btn max"
+          onClick={() => props.onCook(maxCookCount())}
+          disabled={!canCook()}
+        >
+          All
+        </button>
+      </div>
     </div>
   );
 };

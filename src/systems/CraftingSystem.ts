@@ -21,8 +21,23 @@ export const craftingSystem = {
     return inventorySystem.hasItems(recipe.ingredients);
   },
   
+  // Get max times recipe can be crafted with current inventory
+  getMaxCraftCount(recipeId: string): number {
+    const recipe = getRecipe(recipeId);
+    if (!recipe) return 0;
+    
+    let maxCount = Infinity;
+    for (const ing of recipe.ingredients) {
+      const available = gameStore.getItemCount(ing.itemId);
+      const possible = Math.floor(available / ing.quantity);
+      maxCount = Math.min(maxCount, possible);
+    }
+    
+    return maxCount === Infinity ? 0 : maxCount;
+  },
+  
   // Craft a recipe
-  craft(recipeId: string): { success: boolean; error?: string } {
+  craft(recipeId: string, times: number = 1): { success: boolean; error?: string; crafted?: number } {
     const recipe = getRecipe(recipeId);
     if (!recipe) {
       return { success: false, error: 'Unknown recipe' };
@@ -32,26 +47,33 @@ export const craftingSystem = {
       return { success: false, error: 'Not a crafting recipe' };
     }
     
-    // Check ingredients
-    if (!inventorySystem.hasItems(recipe.ingredients)) {
+    const maxCount = this.getMaxCraftCount(recipeId);
+    const craftCount = Math.min(times, maxCount);
+    
+    if (craftCount <= 0) {
       return { success: false, error: 'Missing materials' };
     }
     
-    // Remove ingredients
-    if (!inventorySystem.removeItems(recipe.ingredients)) {
+    // Remove ingredients (multiplied by craft count)
+    const ingredientsToRemove = recipe.ingredients.map(ing => ({
+      itemId: ing.itemId,
+      quantity: ing.quantity * craftCount
+    }));
+    
+    if (!inventorySystem.removeItems(ingredientsToRemove)) {
       return { success: false, error: 'Failed to consume materials' };
     }
     
-    // Add output
-    gameStore.addItem(recipe.output.itemId, recipe.output.quantity);
+    // Add output (multiplied by craft count)
+    gameStore.addItem(recipe.output.itemId, recipe.output.quantity * craftCount);
     
     // Emit event
     eventBus.emit('item:crafted', { 
       recipeId, 
-      output: recipe.output 
+      output: { ...recipe.output, quantity: recipe.output.quantity * craftCount }
     });
     
-    return { success: true };
+    return { success: true, crafted: craftCount };
   },
   
   // Get available recipes (that can be crafted)

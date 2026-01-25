@@ -1,4 +1,4 @@
-// Inventory category tabs
+// Inventory category tabs - compact version
 import { Component, For } from 'solid-js';
 import type { ItemCategory } from '../../data/items';
 
@@ -6,16 +6,15 @@ type TabCategory = ItemCategory | 'all';
 
 interface Tab {
   id: TabCategory;
-  label: string;
   emoji: string;
 }
 
 const TABS: Tab[] = [
-  { id: 'all', label: 'All', emoji: '📦' },
-  { id: 'seed', label: 'Seeds', emoji: '🌱' },
-  { id: 'crop', label: 'Crops', emoji: '🥕' },
-  { id: 'food', label: 'Food', emoji: '🍳' },
-  { id: 'crafted', label: 'Crafted', emoji: '🎁' },
+  { id: 'all', emoji: '📦' },
+  { id: 'seed', emoji: '🌱' },
+  { id: 'crop', emoji: '🥕' },
+  { id: 'food', emoji: '🍳' },
+  { id: 'crafted', emoji: '🎁' },
 ];
 
 interface InventoryTabsProps {
@@ -26,15 +25,15 @@ interface InventoryTabsProps {
 
 export const InventoryTabs: Component<InventoryTabsProps> = (props) => {
   return (
-    <div class="inventory-tabs">
+    <div class="inventory-tabs compact">
       <For each={TABS}>
         {(tab) => (
           <button
             class={`inv-tab ${props.activeTab === tab.id ? 'active' : ''}`}
             onClick={() => props.onTabChange(tab.id)}
+            title={tab.id}
           >
             <span class="tab-emoji">{tab.emoji}</span>
-            <span class="tab-label">{tab.label}</span>
             {props.counts && props.counts[tab.id] > 0 && (
               <span class="tab-count">{props.counts[tab.id]}</span>
             )}

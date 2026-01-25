@@ -21,8 +21,23 @@ export const cookingSystem = {
     return inventorySystem.hasItems(recipe.ingredients);
   },
   
+  // Get max times recipe can be cooked with current inventory
+  getMaxCookCount(recipeId: string): number {
+    const recipe = getRecipe(recipeId);
+    if (!recipe) return 0;
+    
+    let maxCount = Infinity;
+    for (const ing of recipe.ingredients) {
+      const available = gameStore.getItemCount(ing.itemId);
+      const possible = Math.floor(available / ing.quantity);
+      maxCount = Math.min(maxCount, possible);
+    }
+    
+    return maxCount === Infinity ? 0 : maxCount;
+  },
+  
   // Cook a recipe
-  cook(recipeId: string): { success: boolean; error?: string } {
+  cook(recipeId: string, times: number = 1): { success: boolean; error?: string; cooked?: number } {
     const recipe = getRecipe(recipeId);
     if (!recipe) {
       return { success: false, error: 'Unknown recipe' };
@@ -32,26 +47,33 @@ export const cookingSystem = {
       return { success: false, error: 'Not a cooking recipe' };
     }
     
-    // Check ingredients
-    if (!inventorySystem.hasItems(recipe.ingredients)) {
+    const maxCount = this.getMaxCookCount(recipeId);
+    const cookCount = Math.min(times, maxCount);
+    
+    if (cookCount <= 0) {
       return { success: false, error: 'Missing ingredients' };
     }
     
-    // Remove ingredients
-    if (!inventorySystem.removeItems(recipe.ingredients)) {
+    // Remove ingredients (multiplied by cook count)
+    const ingredientsToRemove = recipe.ingredients.map(ing => ({
+      itemId: ing.itemId,
+      quantity: ing.quantity * cookCount
+    }));
+    
+    if (!inventorySystem.removeItems(ingredientsToRemove)) {
       return { success: false, error: 'Failed to consume ingredients' };
     }
     
-    // Add output
-    gameStore.addItem(recipe.output.itemId, recipe.output.quantity);
+    // Add output (multiplied by cook count)
+    gameStore.addItem(recipe.output.itemId, recipe.output.quantity * cookCount);
     
     // Emit event
     eventBus.emit('recipe:cooked', { 
       recipeId, 
-      output: recipe.output 
+      output: { ...recipe.output, quantity: recipe.output.quantity * cookCount }
     });
     
-    return { success: true };
+    return { success: true, cooked: cookCount };
   },
   
   // Get available recipes (that can be cooked)

@@ -12,10 +12,10 @@ export const CraftingStation: Component = () => {
     return craftingSystem.getAvailableRecipes().length;
   });
   
-  const handleCraft = (recipeId: string) => {
-    const result = craftingSystem.craft(recipeId);
+  const handleCraft = (recipeId: string, times: number) => {
+    const result = craftingSystem.craft(recipeId, times);
     if (result.success) {
-      console.log('Crafted:', recipeId);
+      console.log('Crafted:', recipeId, 'x', result.crafted);
     } else {
       console.log('Craft failed:', result.error);
     }
@@ -25,17 +25,15 @@ export const CraftingStation: Component = () => {
     <div class="crafting-station">
       <div class="station-header">
         <h3>Crafting</h3>
-        <span class="available-recipes">
-          {availableCount()} recipe{availableCount() !== 1 ? 's' : ''} available
-        </span>
+        <span class="available-recipes">{availableCount()} available</span>
       </div>
       
-      <div class="recipes-grid">
+      <div class="recipes-grid compact">
         <For each={recipes()}>
           {(recipe) => (
             <CraftCard
               recipe={recipe}
-              onCraft={() => handleCraft(recipe.id)}
+              onCraft={(times) => handleCraft(recipe.id, times)}
             />
           )}
         </For>

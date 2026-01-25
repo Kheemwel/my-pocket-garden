@@ -27,19 +27,50 @@ export const GardenPlot: Component<GardenPlotProps> = (props) => {
     gardenSystem.countEmptySlots(props.plot.id)
   );
   
+  const growingCount = createMemo(() => 
+    gardenSystem.countGrowingPlants(props.plot.id)
+  );
+  
+  const seedCount = createMemo(() => {
+    const seedId = selectedSeedId();
+    if (!seedId) return 0;
+    return gameStore.getItemCount(seedId);
+  });
+  
   const handleHarvestAll = () => {
     gardenSystem.harvestAll(props.plot.id);
+  };
+  
+  const handlePlantAll = () => {
+    gardenSystem.bulkPlant(props.plot.id);
   };
   
   return (
     <div class="garden-plot">
       <div class="plot-header">
-        <h3>Plot {props.plot.id + 1}</h3>
-        <div class="plot-stats">
-          <span class="stat empty">{emptyCount()} empty</span>
+        <div class="plot-title">
+          <h3>Plot {props.plot.id + 1}</h3>
+          <div class="plot-indicators">
+            <Show when={emptyCount() > 0}>
+              <span class="indicator empty">{emptyCount()}</span>
+            </Show>
+            <Show when={growingCount() > 0}>
+              <span class="indicator growing">{growingCount()}</span>
+            </Show>
+            <Show when={readyCount() > 0}>
+              <span class="indicator ready">{readyCount()}</span>
+            </Show>
+          </div>
+        </div>
+        <div class="plot-actions">
+          <Show when={selectedSeedId() && emptyCount() > 0}>
+            <button class="plant-all-btn" onClick={handlePlantAll}>
+              Plant All ({Math.min(emptyCount(), seedCount())})
+            </button>
+          </Show>
           <Show when={readyCount() > 0}>
             <button class="harvest-all-btn" onClick={handleHarvestAll}>
-              Harvest All ({readyCount()})
+              Harvest ({readyCount()})
             </button>
           </Show>
         </div>

@@ -26,6 +26,9 @@ export const GameLayout: Component = () => {
       shopSystem.restockShop();
     }
     
+    // Ensure all seeds are shown in shop (even with 0 stock)
+    shopSystem.initializeShop();
+    
     // Start the time manager
     timeManager.start();
     

@@ -175,12 +175,12 @@ export const gameStore = {
     // Add seeds to inventory
     this.addItem(seedId, quantity);
     
-    // Reduce shop stock
+    // Reduce shop stock (keep items even with 0 quantity)
     setState('shopStock', stock => 
       stock.map(s => s.seedId === seedId 
         ? { ...s, quantity: s.quantity - quantity }
         : s
-      ).filter(s => s.quantity > 0)
+      )
     );
     
     return true;

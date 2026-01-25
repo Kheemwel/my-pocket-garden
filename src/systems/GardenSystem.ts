@@ -104,6 +104,31 @@ export const gardenSystem = {
     return { slotId: emptySlot.id, success };
   },
   
+  // Bulk plant - plant selected seed in all empty slots (up to seed count)
+  bulkPlant(plotId: number): { planted: number; total: number } {
+    const selectedSeedId = gameStore.state.selectedSeedId;
+    if (!selectedSeedId) return { planted: 0, total: 0 };
+    
+    const plot = gameStore.state.plots[plotId];
+    if (!plot) return { planted: 0, total: 0 };
+    
+    const seed = getSeed(selectedSeedId);
+    if (!seed) return { planted: 0, total: 0 };
+    
+    // Find all empty slots
+    const emptySlots = plot.slots.filter(slot => slot.plant === null);
+    const availableSeeds = gameStore.getItemCount(selectedSeedId);
+    const plantCount = Math.min(emptySlots.length, availableSeeds);
+    
+    let planted = 0;
+    for (let i = 0; i < plantCount; i++) {
+      const success = this.plantSeed(plotId, emptySlots[i].id, selectedSeedId);
+      if (success) planted++;
+    }
+    
+    return { planted, total: emptySlots.length };
+  },
+  
   // Harvest all ready plants in a plot
   harvestAll(plotId: number): ItemStack[] {
     const plot = gameStore.state.plots[plotId];

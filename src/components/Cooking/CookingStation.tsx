@@ -12,10 +12,10 @@ export const CookingStation: Component = () => {
     return cookingSystem.getAvailableRecipes().length;
   });
   
-  const handleCook = (recipeId: string) => {
-    const result = cookingSystem.cook(recipeId);
+  const handleCook = (recipeId: string, times: number) => {
+    const result = cookingSystem.cook(recipeId, times);
     if (result.success) {
-      console.log('Cooked:', recipeId);
+      console.log('Cooked:', recipeId, 'x', result.cooked);
     } else {
       console.log('Cook failed:', result.error);
     }
@@ -25,17 +25,15 @@ export const CookingStation: Component = () => {
     <div class="cooking-station">
       <div class="station-header">
         <h3>Cooking</h3>
-        <span class="available-recipes">
-          {availableCount()} recipe{availableCount() !== 1 ? 's' : ''} available
-        </span>
+        <span class="available-recipes">{availableCount()} available</span>
       </div>
       
-      <div class="recipes-grid">
+      <div class="recipes-grid compact">
         <For each={recipes()}>
           {(recipe) => (
             <RecipeCard
               recipe={recipe}
-              onCook={() => handleCook(recipe.id)}
+              onCook={(times) => handleCook(recipe.id, times)}
             />
           )}
         </For>

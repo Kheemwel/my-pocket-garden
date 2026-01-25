@@ -1,0 +1,1010 @@
+/* Cottage Core Theme - Pastel Colors */
+
+:root {
+  /* Background colors */
+  --bg-primary: #fef9f3;
+  --bg-secondary: #f5ebe0;
+  --bg-tertiary: #ede0d4;
+  --bg-card: #ffffff;
+  
+  /* Accent colors */
+  --accent-green: #a7c4a0;
+  --accent-green-light: #c8dcc4;
+  --accent-green-dark: #7da374;
+  --accent-pink: #e8b4b8;
+  --accent-pink-light: #f2d1d4;
+  --accent-brown: #b08968;
+  --accent-brown-light: #c9a882;
+  --accent-yellow: #f2d388;
+  --accent-yellow-light: #f7e4b3;
+  --accent-blue: #a8ccd7;
+  --accent-purple: #c9b8d9;
+  
+  /* Text colors */
+  --text-primary: #5c4033;
+  --text-secondary: #8b7355;
+  --text-muted: #a89582;
+  --text-light: #ffffff;
+  
+  /* Border */
+  --border: #d4c4b5;
+  --border-light: #e8ddd0;
+  
+  /* Status colors */
+  --success: #7da374;
+  --warning: #e8b830;
+  --error: #d48888;
+  --info: #a8ccd7;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(92, 64, 51, 0.1);
+  --shadow-md: 0 4px 6px rgba(92, 64, 51, 0.1);
+  --shadow-lg: 0 10px 20px rgba(92, 64, 51, 0.15);
+  
+  /* Border radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+  
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  
+  /* Font */
+  --font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+}
+
+/* Global Styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  margin: 0 0 var(--space-md);
+  font-weight: 600;
+}
+
+h3 {
+  font-size: var(--font-size-xl);
+}
+
+/* Buttons */
+button {
+  font-family: var(--font-family);
+  cursor: pointer;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  transition: all 0.2s ease;
+  background-color: var(--accent-green);
+  color: var(--text-primary);
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Primary button */
+.btn-primary {
+  background-color: var(--accent-green);
+  color: var(--text-light);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--accent-green-dark);
+}
+
+/* Secondary button */
+.btn-secondary {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 2px solid var(--border);
+}
+
+/* Cards */
+.card {
+  background-color: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-light);
+}
+
+/* Game Layout */
+.game-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-md);
+}
+
+/* Header */
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md) var(--space-lg);
+  background-color: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.game-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--accent-green-dark);
+  margin: 0;
+}
+
+/* Money Display */
+.money-display {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background-color: var(--accent-yellow-light);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: var(--font-size-lg);
+}
+
+.money-icon {
+  font-size: var(--font-size-xl);
+}
+
+/* Navigation Tabs */
+.nav-tabs {
+  display: flex;
+  gap: var(--space-sm);
+  background-color: var(--bg-card);
+  padding: var(--space-sm);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  background-color: transparent;
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+}
+
+.nav-tab:hover {
+  background-color: var(--bg-secondary);
+}
+
+.nav-tab.active {
+  background-color: var(--accent-green-light);
+  color: var(--text-primary);
+}
+
+.nav-tab .tab-icon {
+  font-size: var(--font-size-xl);
+}
+
+.nav-tab .tab-label {
+  font-size: var(--font-size-sm);
+}
+
+/* Main Content */
+.game-content {
+  flex: 1;
+  background-color: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Garden Styles */
+.garden {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.plot-selector {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.plot-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-md);
+}
+
+.plot-tab.active {
+  background-color: var(--accent-green);
+  color: var(--text-light);
+}
+
+.tab-indicators {
+  display: flex;
+  gap: var(--space-xs);
+  margin-top: var(--space-xs);
+}
+
+.indicator {
+  font-size: var(--font-size-xs);
+  padding: 2px 6px;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+}
+
+.indicator.ready {
+  background-color: var(--accent-yellow);
+}
+
+.indicator.growing {
+  background-color: var(--accent-green-light);
+}
+
+.garden-plot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.plot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.plot-header h3 {
+  margin: 0;
+}
+
+.plot-stats {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+}
+
+.stat {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.harvest-all-btn {
+  background-color: var(--accent-yellow);
+  color: var(--text-primary);
+}
+
+.plot-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-sm);
+  background-color: var(--bg-secondary);
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+}
+
+.plot-slot {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: var(--space-sm);
+  min-height: 80px;
+}
+
+.plot-slot:hover {
+  background-color: var(--accent-green-light);
+  transform: scale(1.02);
+}
+
+.plot-slot.ready {
+  background-color: var(--accent-yellow-light);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(242, 211, 136, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(242, 211, 136, 0); }
+}
+
+.slot-empty {
+  color: var(--text-muted);
+  font-size: var(--font-size-2xl);
+}
+
+.slot-plant {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  width: 100%;
+}
+
+.plant-emoji {
+  font-size: var(--font-size-2xl);
+}
+
+.growth-bar {
+  width: 100%;
+  height: 4px;
+  background-color: var(--border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.growth-fill {
+  height: 100%;
+  background-color: var(--accent-green);
+  transition: width 0.5s ease;
+}
+
+.time-remaining {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.harvest-badge {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--accent-brown);
+  background-color: var(--accent-yellow);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.plot-hint {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
+  padding: var(--space-md);
+}
+
+/* Seed Selector */
+.seed-selector {
+  position: fixed;
+  bottom: var(--space-lg);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--bg-card);
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  z-index: 100;
+  max-width: 90vw;
+}
+
+.seed-selector-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+}
+
+.seed-selector-title {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.close-selector {
+  background: none;
+  padding: var(--space-xs);
+  color: var(--text-secondary);
+}
+
+.seeds-list {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.seed-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-sm);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  min-width: 70px;
+  cursor: pointer;
+}
+
+.seed-option:hover {
+  background-color: var(--accent-green-light);
+}
+
+.seed-option.selected {
+  background-color: var(--accent-green);
+  color: var(--text-light);
+}
+
+.seed-emoji {
+  font-size: var(--font-size-xl);
+}
+
+.seed-name {
+  font-size: var(--font-size-xs);
+  text-align: center;
+}
+
+.seed-count {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.seed-option.selected .seed-count {
+  color: var(--text-light);
+}
+
+/* Shop Styles */
+.shop {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.seed-shop, .plot-shop {
+  background-color: var(--bg-secondary);
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+}
+
+.shop-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+}
+
+.restock-timer {
+  display: flex;
+  gap: var(--space-sm);
+  background-color: var(--accent-blue);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+}
+
+.timer-label {
+  color: var(--text-secondary);
+}
+
+.timer-value {
+  font-weight: 700;
+}
+
+.shop-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.shop-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-card);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+}
+
+.shop-item.cannot-afford {
+  opacity: 0.6;
+}
+
+.item-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.item-emoji {
+  font-size: var(--font-size-2xl);
+}
+
+.item-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-name {
+  font-weight: 600;
+}
+
+.item-stock {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.item-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.item-price {
+  font-weight: 700;
+  color: var(--accent-brown);
+}
+
+.buy-buttons {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.buy-btn {
+  background-color: var(--accent-green);
+  color: var(--text-light);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.buy-btn.buy-5 {
+  background-color: var(--accent-green-dark);
+}
+
+.shop-empty {
+  text-align: center;
+  padding: var(--space-xl);
+  color: var(--text-secondary);
+}
+
+/* Plot Shop */
+.plot-info {
+  margin-bottom: var(--space-lg);
+}
+
+.current-plots {
+  color: var(--text-secondary);
+}
+
+.plot-purchase {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-card);
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
+}
+
+.next-plot {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.plot-icon {
+  font-size: var(--font-size-2xl);
+}
+
+.plot-label {
+  font-weight: 600;
+}
+
+.plot-price {
+  font-weight: 700;
+  color: var(--accent-brown);
+}
+
+.buy-plot-btn {
+  background-color: var(--accent-pink);
+  color: var(--text-primary);
+  padding: var(--space-md) var(--space-xl);
+}
+
+.max-plots {
+  text-align: center;
+  padding: var(--space-lg);
+  color: var(--text-secondary);
+}
+
+/* Inventory Styles */
+.inventory {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.inventory-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total-value {
+  font-weight: 600;
+  color: var(--accent-brown);
+}
+
+.inventory-tabs {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.inv-tab {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-full);
+}
+
+.inv-tab.active {
+  background-color: var(--accent-green);
+  color: var(--text-light);
+}
+
+.tab-count {
+  background-color: var(--accent-yellow);
+  color: var(--text-primary);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+}
+
+.inventory-sort {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.sort-label {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.sort-btn {
+  background-color: transparent;
+  color: var(--text-secondary);
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--font-size-sm);
+}
+
+.sort-btn.active {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.inventory-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.item-stack {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  background-color: var(--bg-secondary);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+}
+
+.item-stack.clickable {
+  cursor: pointer;
+}
+
+.item-stack.clickable:hover {
+  background-color: var(--accent-green-light);
+}
+
+.item-stack.selected {
+  background-color: var(--accent-green);
+  color: var(--text-light);
+}
+
+.item-icon {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-card);
+  border-radius: var(--radius-md);
+}
+
+.item-icon .item-emoji {
+  font-size: var(--font-size-2xl);
+}
+
+.item-quantity {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  background-color: var(--accent-brown);
+  color: var(--text-light);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: var(--radius-full);
+}
+
+.item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.item-value {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.item-stack.selected .item-value {
+  color: var(--text-light);
+}
+
+.item-actions {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.sell-btn {
+  background-color: var(--accent-pink);
+  color: var(--text-primary);
+  font-size: var(--font-size-xs);
+  padding: var(--space-xs) var(--space-sm);
+}
+
+.sell-btn.sell-all {
+  background-color: var(--accent-pink-light);
+}
+
+.inventory-empty {
+  text-align: center;
+  padding: var(--space-xl);
+  color: var(--text-secondary);
+}
+
+/* Cooking/Crafting Styles */
+.cooking-station, .crafting-station {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.station-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.available-recipes {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.recipes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-lg);
+}
+
+.recipe-card, .craft-card {
+  background-color: var(--bg-secondary);
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.recipe-card.cannot-cook, .craft-card.cannot-craft {
+  opacity: 0.7;
+}
+
+.recipe-header, .craft-header {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.recipe-emoji, .craft-emoji {
+  font-size: var(--font-size-2xl);
+}
+
+.recipe-info, .craft-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.recipe-name, .craft-name {
+  font-weight: 600;
+}
+
+.recipe-description, .craft-description {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.recipe-ingredients, .craft-materials {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.ingredients-label, .materials-label, .output-label {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.ingredients-list, .materials-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.ingredient, .material {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background-color: var(--bg-card);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+}
+
+.ingredient.missing, .material.missing {
+  color: var(--error);
+}
+
+.ingredient.has-enough, .material.has-enough {
+  color: var(--success);
+}
+
+.ing-count, .mat-count {
+  font-weight: 600;
+}
+
+.recipe-output, .craft-output {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.output-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background-color: var(--accent-yellow-light);
+  padding: var(--space-sm);
+  border-radius: var(--radius-md);
+}
+
+.output-name {
+  font-weight: 600;
+}
+
+.output-value {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.cook-btn, .craft-btn {
+  background-color: var(--accent-green);
+  color: var(--text-light);
+  padding: var(--space-md);
+}
+
+/* Settings Panel */
+.settings-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.settings-section {
+  background-color: var(--bg-secondary);
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+}
+
+.settings-section h4 {
+  margin-bottom: var(--space-md);
+}
+
+.settings-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.settings-btn {
+  padding: var(--space-md) var(--space-lg);
+}
+
+.settings-btn.danger {
+  background-color: var(--error);
+  color: var(--text-light);
+}
+
+.import-input {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .game-layout {
+    padding: var(--space-sm);
+  }
+  
+  .plot-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--space-xs);
+  }
+  
+  .plot-slot {
+    min-height: 60px;
+    padding: var(--space-xs);
+  }
+  
+  .plant-emoji {
+    font-size: var(--font-size-lg);
+  }
+  
+  .nav-tabs {
+    flex-wrap: wrap;
+  }
+  
+  .nav-tab {
+    padding: var(--space-sm);
+  }
+  
+  .recipes-grid {
+    grid-template-columns: 1fr;
+  }
+}

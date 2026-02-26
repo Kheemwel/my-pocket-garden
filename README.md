@@ -148,34 +148,6 @@ The `EventBus` provides a publish-subscribe pattern for game events (plant harve
 
 Each major feature (gardening, cooking, crafting, inventory, shop) has a dedicated system that encapsulates the logic for that feature.
 
-## Contributing
-
-Contributions are welcome! To contribute:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes
-4. Commit your changes (`git commit -m 'Add amazing feature'`)
-5. Push to the branch (`git push origin feature/amazing-feature`)
-6. Open a Pull Request
-
-When contributing, please:
-
-- Follow the existing code style and naming conventions
-- Add TypeScript types for new functions and data
-- Test your changes in the development environment
-- Update relevant documentation
-
-## Support & Documentation
-
-- **Issues**: Report bugs and suggest features via GitHub Issues
-- **Development**: See this README for setup and architecture overview
-- **Code Comments**: Refer to inline code comments for detailed implementation notes
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ## Acknowledgments
 
 - Built with [SolidJS](https://www.solidjs.com/) - a lightweight reactive JavaScript library
